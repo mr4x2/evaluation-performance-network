@@ -554,7 +554,7 @@ gnuplot> plot "gra_1-2.tr" w lines
 
 ![alt text](./image/image14.png)
 
-![alt text](image.png)
+
 
 ### Câu 4 (2 điểm)
 
