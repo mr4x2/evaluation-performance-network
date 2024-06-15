@@ -199,7 +199,16 @@ awk '{sum+=$2; count+=1} END {print "Average Routing Cost: ", sum/count}' routin
 
 Average Routing Cost:  25.1562
 ```
+Cách 2 sử dụng lệnh:
 
+Tính số định tuyến
+```cmd
+awk '{count[$3]++} END {for (node in count) print node, count[node]}' send_aodv_event.txt | wc -l
+
+64
+```
+
+`Average Routing Cost:  1610/64 = 25.15625`
 
 
 ### 2.3 Thông lượng (Throughput)
