@@ -1,6 +1,7 @@
 # evaluation-performance-network report
 
 Họ và tên: Đỗ Anh Tú
+
 Mã số sinh viên: 20021460
 
 ```bash
@@ -101,7 +102,7 @@ s 150.035711862 _1_ AGT  --- 8 tcp 1040 [0 0 0 0] ------- [1:0 2:1 32 0] [1 0] 0
 
 #### 2.1.2 Tính độ trễ định tuyến trung bình của tất cả các kết nối.
 
-Độ trễ định tuyến trung bình = (độ trễ định tuyến cbr + độ trễ định tuyến ftp)/2 = (4.22352286 + 0.035711862)/2 = 2.12961736
+`Độ trễ định tuyến trung bình = (độ trễ định tuyến cbr + độ trễ định tuyến ftp)/2 = (4.22352286 + 0.035711862)/2 = 2.12961736`
 
 ### 2.2 Chi phí định tuyến
 
@@ -579,7 +580,7 @@ gnuplot> plot "gra_1-2.tr" w lines
 
 ![alt text](./image/image14.png)
 
-### Câu #4 (2 điểm)
+### Câu 4 (2 điểm)
 
 #### 4.1 Số gói tin được gửi từ nút nguồn (nút có thực thể gửi tcp hoặc udp)
 
