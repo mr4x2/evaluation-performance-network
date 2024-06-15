@@ -42,19 +42,11 @@ CBR
 cat wireless1-out.tr|grep -m 34 -E '^S|DSR|cbr' | grep AGT
 
 M 0.0 sc ./20021460.txt cp ./cbr-3-test seed 0.0
-s 127.936679222 _0_ AGT  --- 0 cbr 512 [0 0 0 0] ------- [0:0 2:0 32 0] [0] 0 1
-r 127.936679222 _0_ RTR  --- 0 cbr 512 [0 0 0 0] ------- [0:0 2:0 32 0] [0] 0 1
-s 127.993487573 _0_ RTR  --- 0 cbr 532 [0 0 0 0] ------- [0:0 2:0 30 2] [0] 0 1
-s 127.995024076 _0_ MAC  --- 0 cbr 590 [13a 2 0 800] ------- [0:0 2:0 30 2] [0] 0 1
-r 127.999744827 _2_ MAC  --- 0 cbr 532 [13a 2 0 800] ------- [0:0 2:0 30 2] [0] 1 1
-r 127.999769827 _2_ AGT  --- 0 cbr 532 [13a 2 0 800] ------- [0:0 2:0 30 2] [0] 1 1
-s 132.160202086 _0_ AGT  --- 1 cbr 512 [0 0 0 0] ------- [0:0 2:0 32 0] [1] 0 1
-r 132.160202086 _0_ RTR  --- 1 cbr 512 [0 0 0 0] ------- [0:0 2:0 32 0] [1] 0 1
-s 132.160202086 _0_ RTR  --- 1 cbr 532 [0 0 0 0] ------- [0:0 2:0 30 2] [1] 0 1
-s 132.161214652 _0_ MAC  --- 1 cbr 590 [13a 2 0 800] ------- [0:0 2:0 30 2] [1] 0 1
-r 132.165935435 _2_ MAC  --- 1 cbr 532 [13a 2 0 800] ------- [0:0 2:0 30 2] [1] 1 1
-r 132.165960435 _2_ AGT  --- 1 cbr 532 [13a 2 0 800] ------- [0:0 2:0 30 2] [1] 1 1
-s 134.239939346 _0_ AGT  --- 2 cbr 512 [0 0 0 0] ------- [0:0 2:0 32 0] [2] 0 1
+s 127.936679222 _0_ AGT  --- 0 cbr 512 [0 0 0 0] ------- [0:0 2:0 32 0] [0] 0 3
+s 132.160202086 _0_ AGT  --- 1 cbr 512 [0 0 0 0] ------- [0:0 2:0 32 0] [1] 0 2
+r 134.077942861 _2_ AGT  --- 0 cbr 532 [13a 2 e 800] ------- [0:0 2:0 28 2] [0] 3 3
+r 134.096632956 _2_ AGT  --- 1 cbr 532 [13a 2 e 800] ------- [0:0 2:0 28 2] [1] 3 2
+s 135.759450937 _0_ AGT  --- 2 cbr 512 [0 0 0 0] ------- [0:0 2:0 32 0] [2] 0 2
 ```
 Dựa vào hướng dẫn, độ trễ dịnh tuyến được xác định cbr node 0 tới node 2 bằng:
 
@@ -73,22 +65,21 @@ TCP
 ```cmd
 cat wireless1-out.tr|grep -m 60 -E '^S|DSR|tcp|ack'|grep '^s'
 
-s 150.000000000 _1_ AGT  --- 6 tcp 40 [0 0 0 0] ------- [1:0 2:1 32 0] [0 0] 0 1
-s 150.009112415 _1_ RTR  --- 6 tcp 40 [0 0 0 0] ------- [1:0 2:1 30 2] [0 0] 0 1
-s 150.032855663 _1_ MAC  --- 6 tcp 98 [13a 2 1 800] ------- [1:0 2:1 30 2] [0 0] 0 1
-s 150.033665463 _2_ AGT  --- 7 ack 40 [0 0 0 0] ------- [2:1 1:0 32 0] [0 0] 0 1
-s 150.033665463 _2_ RTR  --- 7 ack 40 [0 0 0 0] ------- [2:1 1:0 30 1] [0 0] 0 1
-s 150.034902062 _2_ MAC  --- 7 ack 98 [13a 1 2 800] ------- [2:1 1:0 30 1] [0 0] 0 1
-s 150.035711862 _1_ AGT  --- 8 tcp 1040 [0 0 0 0] ------- [1:0 2:1 32 0] [1 0] 0 1
-s 150.035711862 _1_ AGT  --- 9 tcp 1040 [0 0 0 0] ------- [1:0 2:1 32 0] [2 0] 0 1
-s 150.035711862 _1_ RTR  --- 8 tcp 1040 [0 0 0 0] ------- [1:0 2:1 30 2] [1 0] 0 1
-s 150.035711862 _1_ RTR  --- 9 tcp 1040 [0 0 0 0] ------- [1:0 2:1 30 2] [2 0] 0 1
-
-
-s 150.000000000 _1_ AGT  --- 6 tcp 40 [0 0 0 0] ------- [1:0 2:1 32 0] [0 0] 0 1
-s 150.033665463 _2_ AGT  --- 7 ack 40 [0 0 0 0] ------- [2:1 1:0 32 0] [0 0] 0 1
-s 150.035711862 _1_ AGT  --- 8 tcp 1040 [0 0 0 0] ------- [1:0 2:1 32 0] [1 0] 0 1
-s 150.035711862 _1_ AGT  --- 9 tcp 1040 [0 0 0 0] ------- [1:0 2:1 32 0] [2 0] 0 1
+s 150.000000000 _1_ AGT  --- 6 tcp 40 [0 0 0 0] ------- [1:0 2:1 32 0] [0 0] 0 2
+s 150.058892819 _1_ RTR  --- 6 tcp 40 [0 0 0 0] ------- [1:0 2:1 30 6] [0 0] 0 2
+s 150.062045903 _1_ MAC  --- 6 tcp 98 [13a 6 1 800] ------- [1:0 2:1 30 6] [0 0] 0 2
+s 150.066028645 _6_ MAC  --- 6 tcp 98 [13a e 6 800] ------- [1:0 2:1 29 14] [0 0] 1 2
+s 150.070292672 _14_ MAC  --- 6 tcp 98 [13a 2 e 800] ------- [1:0 2:1 28 2] [0 0] 2 2
+s 150.071102305 _2_ AGT  --- 7 ack 40 [0 0 0 0] ------- [2:1 1:0 32 0] [0 0] 0 2
+s 150.071102305 _2_ RTR  --- 7 ack 40 [0 0 0 0] ------- [2:1 1:0 30 12] [0 0] 0 2
+s 150.072418779 _2_ MAC  --- 7 ack 98 [13a c 2 800] ------- [2:1 1:0 30 12] [0 0] 0 2
+s 150.074444055 _12_ MAC  --- 7 ack 98 [13a 1 c 800] ------- [2:1 1:0 29 1] [0 0] 1 2
+s 150.075253325 _1_ AGT  --- 8 tcp 1040 [0 0 0 0] ------- [1:0 2:1 32 0] [1 0] 0 2
+s 150.075253325 _1_ AGT  --- 9 tcp 1040 [0 0 0 0] ------- [1:0 2:1 32 0] [2 0] 0 2
+s 150.075253325 _1_ RTR  --- 8 tcp 1040 [0 0 0 0] ------- [1:0 2:1 30 12] [1 0] 0 2
+s 150.075253325 _1_ RTR  --- 9 tcp 1040 [0 0 0 0] ------- [1:0 2:1 30 12] [2 0] 0 2
+s 150.076488864 _1_ MAC  --- 8 tcp 1098 [13a c 1 800] ------- [1:0 2:1 30 12] [1 0] 0 2
+s 150.086354607 _12_ MAC  --- 8 tcp 1098 [13a 2 c 800] ------- [1:0 2:1 29 2] [1 0] 1 2
 ```
 
 Dựa vào hướng dẫn, độ trễ dịnh tuyến được xác định ftp node 1 tới node 2 bằng:
@@ -98,11 +89,11 @@ s 150.000000000 _1_ AGT  --- 6 tcp 40 [0 0 0 0] ------- [1:0 2:1 32 0] [0 0] 0 1
 
 s 150.035711862 _1_ AGT  --- 8 tcp 1040 [0 0 0 0] ------- [1:0 2:1 32 0] [1 0] 0 1
 ```
-`latency_node_1_2 = 150.035711862 - 150.000000000 = 0.035711862`
+`latency_node_1_2 = 150.075253325 - 150.000000000 = 0.075253325`
 
 #### 2.1.2 Tính độ trễ định tuyến trung bình của tất cả các kết nối.
 
-`Độ trễ định tuyến trung bình = (độ trễ định tuyến cbr + độ trễ định tuyến ftp)/2 = (4.22352286 + 0.035711862)/2 = 2.12961736`
+`Độ trễ định tuyến trung bình = (độ trễ định tuyến cbr + độ trễ định tuyến ftp)/2 = (4.22352286 + 0.075253325)/2 = 2.14938809`
 
 ### 2.2 Chi phí định tuyến
 
@@ -120,78 +111,72 @@ awk '{count[$3]++} END {for (node in count) print node, count[node]}' send_aodv_
 
 Kết quả chi phí định tuyến cụ thể sẽ như sau và sẽ được lưu vào file routing_costs.txt:
 ```tr
-_54_ 20
-_10_ 23
-_0_ 34
-_33_ 26
-_56_ 20
-_12_ 29
-_2_ 22
-_35_ 29
-_58_ 20
-_60_ 20
-_14_ 26
-_4_ 26
-_37_ 25
-_62_ 20
-_16_ 29
-_6_ 24
-_41_ 29
-_39_ 27
-_18_ 26
+_54_ 17
+_10_ 29
+_0_ 28
+_33_ 16
+_56_ 17
+_12_ 32
+_2_ 27
+_35_ 27
+_58_ 17
+_60_ 17
+_14_ 27
+_4_ 25
+_37_ 27
+_62_ 17
+_16_ 27
+_6_ 26
+_41_ 30
+_39_ 28
+_18_ 27
 _20_ 27
-_8_ 26
-_43_ 28
+_8_ 28
+_43_ 31
 _22_ 27
-_45_ 29
+_45_ 27
 _24_ 26
-_47_ 30
-_26_ 26
-_51_ 20
+_47_ 27
+_26_ 28
 _49_ 27
-_28_ 27
-_30_ 27
-_53_ 20
+_51_ 17
+_30_ 34
+_28_ 28
+_53_ 17
 _32_ 27
-_55_ 20
-_11_ 25
-_1_ 32
-_34_ 22
-_57_ 20
-_13_ 30
-_3_ 22
-_36_ 26
-_61_ 20
-_59_ 20
-_15_ 24
-_5_ 24
-_40_ 23
+_55_ 17
+_11_ 32
+_1_ 30
+_34_ 28
+_57_ 17
+_13_ 27
+_3_ 28
+_36_ 30
+_59_ 17
+_61_ 17
+_15_ 29
+_5_ 27
+_40_ 28
 _38_ 28
-_63_ 20
-_17_ 34
-_7_ 29
-_42_ 25
-_19_ 24
+_63_ 17
+_17_ 27
+_7_ 27
+_42_ 27
 _21_ 27
-_9_ 30
-_44_ 29
-_23_ 28
-_46_ 30
-_25_ 29
-_50_ 20
-_48_ 22
-_27_ 31
-_52_ 20
+_19_ 27
+_9_ 27
+_44_ 27
+_23_ 27
+_46_ 26
+_25_ 26
+_48_ 27
+_50_ 17
+_27_ 24
+_52_ 17
 _29_ 26
-_31_ 28
+_31_ 27
 ```
 
-Tính tổng chi phí định tuyến:
-```cmd
-cat wireless1-out.tr|grep ^s|grep 'MAC'|grep -E 'AODV'|wc -l
-1630
-```
-![alt text](./image/image4.png)
 
 #### 2.2.2 Tính chi phí định tuyến trung bình của tất cả các kết nối.
 
@@ -200,9 +185,11 @@ Tính tổng chi phí định tuyến bằng 2 cách:
 cat wireless1-out.tr|grep ^s|grep 'MAC'|grep -E 'AODV'|wc -l
 awk '{sum+=$2; count+=1} END {print "Average Routing Cost: ", sum}' routing_costs.txt
 
-1630
-Average Routing Cost:  1630
+1610
+Average Routing Cost:  1610
 ```
+
+![alt text](./image/image41.png)
 
 Sử dụng câu lệnh sau để tính chi phí định tuyến trung bình:
 
@@ -210,18 +197,9 @@ Cách 1 sử dụng lệnh:
 ```cmd
 awk '{sum+=$2; count+=1} END {print "Average Routing Cost: ", sum/count}' routing_costs.txt
 
-Average Routing Cost:  25.4688
+Average Routing Cost:  25.1562
 ```
 
-Cách 2: Tổng chi phí định tuyến/số dòng định tuyến
-
-Tính số dòng định tuyến:
-```cmd
-cat wireless1-out.tr|grep ^s|grep 'MAC'|grep -E 'AODV'|wc -l
-64
-```
-
-Chi phí định tuyến trung bình = 1630/64=25.4688
 
 
 ### 2.3 Thông lượng (Throughput)
@@ -238,7 +216,7 @@ Tính tổng kích thước các gói tin đã nhận:
 ```cmd
 awk '{sum[$3]+=$6} END {for (node in sum) print node, sum[node]}' receive_events_throughput_cbr.txt
 
-_2_ 980367
+_2_ 605610
 ```
 
 Xác định khoảng thời gian:
@@ -246,14 +224,13 @@ Xác định khoảng thời gian:
 awk '{print $2}' receive_events_throughput_cbr.txt | sort -n | awk 'NR==1{first=$1} END{print "first time rec:", first; print "last time rec:", $1; print "gap time:", $1 - first}'
 
 
-first time rec: 127.999769827
-last time rec: 392.649651639
-gap time: 264.65
+first time rec: 134.077942861
+last time rec: 399.633345203
+gap time: 265.555
 ```
 ![alt text](./image/image5.png)
 
-
-`Thông lượng = Lượng data/thời gian = 980367 / 264.65 = 3704.3907`
+`Thông lượng = Lượng data/thời gian = 605610 / 265.555 = 2280.54452`
 
 
 **FTP node 1 -> node 2**
@@ -267,8 +244,8 @@ grep '^r' wireless1-out.tr | grep 'AGT' | grep -E 'tcp|ack' > receive_events_thr
 Tính tổng kích thước gói tin đã nhận:
 ```cmd
 awk '{sum[$3]+=$6} END {for (node in sum) print node, sum[node]}' receive_events_throughput_ftp.txt
-_1_ 157218987
-_2_ 158191995
+_1_ 83379106
+_2_ 84324197
 ```
 
 Xác định khoảng thời gian:
@@ -276,19 +253,18 @@ Xác định khoảng thời gian:
 ```cmd
 awk '{print $2}' receive_events_throughput_ftp.txt | sort -n | awk 'NR==1{first=$1} END{print "first time rec:", first; print "last time rec:", $1; print "gap time:", $1 - first}'
 
-first time rec: 150.033665463
-last time rec: 399.981098639
-gap time: 249.947
+first time rec: 150.071102305
+last time rec: 399.988732858
+gap time: 249.918
 ```
-![alt text](./image/image5.png)
 
 Tính thông lượng:
 
-`throughput_ftp = (157218987+158191995)/249.947 = 1261911.45`
+`throughput_ftp = (83379106+84324197)/249.918 = 671033.311`
 
 #### 2.3.2 Tính thông lượng trung bình của tất cả các kết nối.
 
-`avg_throughput_ftp =  (throughput_cbr + throughput_ftp)/2 = (1261911.45 + 3704.3907) / 2=632807.92`
+`avg_throughput_ftp =  (throughput_cbr + throughput_ftp)/2 = (671033.311 + 2280.54452) / 2=336656.928`
 
 ### 2.4 PDR (Packet Delivery Ratio) 
 `PDR=số gói tin nhận được thành công / số gói tin gửi đi từ nguồn`
@@ -302,7 +278,7 @@ số gói tin nhận được thành công:
 ```cmd
 grep '^r' wireless1-out.tr | grep 'AGT' | grep -E 'cbr' | wc -l
 
-65
+64
 ```
 
 số gói tin gửi đi từ nguồn
@@ -311,12 +287,12 @@ số gói tin gửi đi từ nguồn
 ```cmd
 grep '^s' wireless1-out.tr | grep 'AGT' | grep -E 'cbr' | wc -l 
 
-71
+69
 ```
 
 ![alt text](./image/image7.png)
 
-`PDR_cbr=số gói tin nhận được thành công / số gói tin gửi đi từ nguồn = 65/71 = 0.915492958 = 91.55%`
+`PDR_cbr=số gói tin nhận được thành công / số gói tin gửi đi từ nguồn = 64/69 = 0.927536232 = 92.75%`
 
 **Kết nối ftp từ node 1 tới node 2**
 
@@ -325,7 +301,7 @@ số gói tin nhận được thành công:
 ```cmd
 grep '^r' wireless1-out.tr | grep 'AGT' | grep -E 'tcp|ack' | wc -l
 
-25077
+18235
 ```
 
 số gói tin gửi đi từ nguồn
@@ -334,16 +310,16 @@ số gói tin gửi đi từ nguồn
 ```cmd
 grep '^s' wireless1-out.tr | grep 'AGT' | grep -E 'tcp|ack' | wc -l 
 
-25192
+18437
 ```
 
 ![alt text](./image/image8.png)
 
-`PDR_ftp=số gói tin nhận được thành công / số gói tin gửi đi từ nguồn = 25077/25192 = 0.995435059 = 99.54%`
+`PDR_ftp=số gói tin nhận được thành công / số gói tin gửi đi từ nguồn = 18235/18437 = 0.989043771 = 98.90%`
 
 #### 2.4.2 Tính PDR trung bình của tất cả các kết nối.
 
-`avg_PDR = (PDR_ftp + PDR_cbr) / 2 = (0.995435059+0.915492958) /2 = 0.955464008 = 95.55%`
+`avg_PDR = (PDR_ftp + PDR_cbr) / 2 = (0.927536232+0.989043771) /2 = 0.958290001 = 95.83%`
 
 ### 2.5 Goodput 
 
@@ -354,7 +330,7 @@ Số gói tin gửi ở tầng MAC từ node0 đến node2:
 ```cmd
 cat wireless1-out.tr|grep "MAC"|grep '\[0:.'|grep ' 2:.'|grep ^s|grep -E 'cbr'|wc -l
 
-148
+240
 ```
 
 Số gói tin nhận ở tầng MAC từ node0 đến node2:
@@ -362,13 +338,12 @@ Số gói tin nhận ở tầng MAC từ node0 đến node2:
 ```cmd
 cat wireless1-out.tr|grep "MAC"|grep '\[0:.'|grep ' 2:.'|grep ^r|grep -E 'cbr'|wc -l
 
-148
+240
 ```
 
 ![alt text](./image/image10.png)
 
-
-`Goodput = N_receive / N_send = 148/148`
+`Goodput_cbr = N_receive / N_send = 240/240=1`
 
 
 
@@ -378,36 +353,25 @@ cat wireless1-out.tr|grep "MAC"|grep '\[0:.'|grep ' 2:.'|grep ^r|grep -E 'cbr'|w
 Số gói tin gửi ở tầng MAC FTP:
 ```cmd
 grep '^s' wireless1-out.tr | grep 'MAC' | grep -E 'tcp|ack' | wc -l
-34808
+40284
 ```
 
 Số gói tin nhận ở tầng MAC FTP:
 
 ```cmd
 grep '^r' wireless1-out.tr | grep 'MAC' | grep -E 'tcp|ack' | wc -l
-34782
+40282
 ```
 
 ![alt text](./image/image11.png)
 
-`Goodput = N_receive / N_send = 34782/34808= 0.999253045`
+`Goodput_ftp = N_receive / N_send = 40282/40284= 0.999950352`
 
 #### 2.5.2 Tính Goodput trung bình của tất cả các kết nối.
 
-Đếm số gói tin truyền đi
-```cmd
-grep '^s' wireless1-out.tr | grep 'MAC' | wc -l
-144012
-```
-Đếm số gói tin nhận được
-```cmd
-grep '^r' wireless1-out.tr | grep 'MAC' | wc -l
-164538
-```
 
-![alt text](./image/image12.png)
 
-`Goodput = N_receive / N_send = 144012/164538= 0.875250702`
+`avg_Goodput =(Goodput_cbr+Goodput_ftp)/2 = (1+0.999950352)/2= 0.999975176`
 
 
 ## Câu 3
@@ -491,6 +455,7 @@ gnuplot> plot "throughput1-2.tr" w lines
 ```
 
 ![alt text](./image/image13.png)
+
 
 
 ### 3.2 (1 điểm) Thông lượng được tính trung bình trong mỗi khoảng thời gian gọi là time-granularity, được truyền vào từ dòng lệnh. Việc tính cần được thực hiện mỗi khi có một gói tin được truyền đến đích. (Giải thích ngắn gọn: Vẽ đồ thị như ở bài giảng của thầy, mục 4.5.1.3.2).
@@ -580,6 +545,8 @@ gnuplot> plot "gra_1-2.tr" w lines
 
 ![alt text](./image/image14.png)
 
+![alt text](image.png)
+
 ### Câu 4 (2 điểm)
 
 #### 4.1 Số gói tin được gửi từ nút nguồn (nút có thực thể gửi tcp hoặc udp)
@@ -591,7 +558,7 @@ Node 0 -> node 2
 ```cmd
 cat wireless1-out.tr|grep "AGT"|grep -E 'tcp|cbr'|grep '\[0:.'|grep ' 2:.'|grep ^s|wc -l
 
-70
+69
 ```
 
 Node 1-> node 2
@@ -599,7 +566,7 @@ Node 1-> node 2
 ```cmd
 cat wireless1-out.tr|grep "AGT"|grep -E 'tcp|cbr'|grep '\[1:.'|grep ' 2:.'|grep ^s|wc -l
 
-12626
+9282
 ```
 
 **Tính tại tầng MAC**:
@@ -607,13 +574,13 @@ cat wireless1-out.tr|grep "AGT"|grep -E 'tcp|cbr'|grep '\[1:.'|grep ' 2:.'|grep 
 ```cmd
 cat wireless1-out.tr|grep "MAC"|grep -E 'tcp|cbr'|grep '\[0:.'|grep ' 2:.'|grep ^s|wc -l
 
-148
+240
 ```
 - Node 1 -> node 2:
 ```cmd
 cat wireless1-out.tr|grep "MAC"|grep -E 'tcp|cbr'|grep '\[1:.'|grep ' 2:.'|grep ^s|wc -l
 
-17459
+20274
 ```
 
 ### 4.2 Số gói tin được nhận tại nút đích (nút có thực thể nhận tcp/udp, tức là sink/null)
@@ -623,13 +590,13 @@ cat wireless1-out.tr|grep "MAC"|grep -E 'tcp|cbr'|grep '\[1:.'|grep ' 2:.'|grep 
 ```cmd
 cat wireless1-out.tr|grep "AGT"|grep -E 'tcp|cbr'|grep '\[0:.'|grep ' 2:.'|grep ^r|wc -l
 
-65
+64
 ```
 - Node 1 -> node 2:
 ```cmd
 cat wireless1-out.tr|grep "AGT"|grep -E 'tcp|cbr'|grep '\[1:.'|grep ' 2:.'|grep ^r|wc -l
 
-12566
+9155
 ```
 
 **Tính tại tầng MAC:**
@@ -637,11 +604,11 @@ cat wireless1-out.tr|grep "AGT"|grep -E 'tcp|cbr'|grep '\[1:.'|grep ' 2:.'|grep 
 ```cmd
 cat wireless1-out.tr|grep "MAC"|grep -E 'tcp|cbr'|grep '\[0:.'|grep ' 2:.'|grep ^r|wc -l
 
-148
+240
 ```
 - Node 1 -> node 2:
 ```cmd
 cat wireless1-out.tr|grep "MAC"|grep -E 'tcp|cbr'|grep '\[1:.'|grep ' 2:.'|grep ^r|wc -l
 
-17433
+20273
 ```

@@ -1,106 +1,106 @@
-#Asimpleexampleforwirelesssimulation
+# A simple example for wireless simulation
 
-#======================================================================
-#Defineoptions
-#======================================================================
-setval(chan)	Channel/WirelessChannel	;#channeltype
-setval(prop)	Propagation/TwoRayGround;#radio-propagationmodel
-setval(netif)	Phy/WirelessPhy		;#networkinterfacetype
-setval(mac)	Mac/802_11		;#MACtype
-setval(ifq)	Queue/DropTail/PriQueue	;#Interfacequeuetype
-setval(ll)	LL			;#Linklayertype
-setval(ant)	Antenna/OmniAntenna	;#Antennatype
-setval(x)	670	;#Xdimensionofthetopography
-setval(y)	670	;#Ydimensionofthetopography
-setval(ifqlen)	50	;#maxpacketinifq
-setval(seed)	0.0		;#randomseed
-setval(adhocRouting)	AODV	;#AODV/DSDV/TORA...
-setval(nn)64	;#howmanynodesaresimulated
-#setval(cp)	"../mobility/scene/cbr-3-test"
-setval(cp)	"./cbr-3-test"		;#cp=connectionpattern
-#setval(sc)	"../mobility/scene/scen-3-test"
-setval(sc)	"./20021460.txt"		;#sc=scenario=movementpattern
-setval(stop)	400.0			;#simulationtime
+# ======================================================================
+# Define options
+# ======================================================================
+set val(chan)	Channel/WirelessChannel	;# channel type
+set val(prop)	Propagation/TwoRayGround ;# radio-propagation model
+set val(netif)	Phy/WirelessPhy		;# network interface type
+set val(mac)	Mac/802_11		;# MAC type
+set val(ifq)	Queue/DropTail/PriQueue	;# Interface queue type
+set val(ll)	LL			;# Link layer type
+set val(ant)	Antenna/OmniAntenna	;# Antenna type
+set val(x)	670	;# X dimension of the topography
+set val(y)	670	;# Y dimension of the topography
+set val(ifqlen)	50	;# max packet in ifq
+set val(seed)	0.0		;# random seed 
+set val(adhocRouting)	AODV	;# AODV/DSDV/TORA...
+set val(nn)             64	;# how many nodes are simulated
+# set val(cp)	"../mobility/scene/cbr-3-test" 
+set val(cp)	"./cbr-3-test"		;#cp= connection pattern 
+# set val(sc)	"../mobility/scene/scen-3-test" 
+set val(sc)	"./20021460.txt"		;#sc= scenario= movement pattern 
+set val(stop)	400.0			;# simulation time
 
-#=====================================================================
-#MainProgram
-#======================================================================
+# =====================================================================
+# Main Program
+# ======================================================================
 #
-#InitializeGlobalVariables
+# Initialize Global Variables
 #
-#createsimulatorinstance
-setns_		[newSimulator]
+# create simulator instance
+set ns_		[new Simulator]
 
-#setuptopographyobject
-settopo	[newTopography]
+# setup topography object
+set topo	[new Topography]
 
-#createtraceobjectfornsandnam
-settracefd	[openwireless1-out.trw]
-setnamtrace[openwireless1-out.namw]
+# create trace object for ns and nam
+set tracefd	[open wireless1-out.tr w]
+set namtrace    [open wireless1-out.nam w]
 
-$ns_trace-all$tracefd
-$ns_namtrace-all-wireless$namtrace$val(x)$val(y)
+$ns_ trace-all $tracefd
+$ns_ namtrace-all-wireless $namtrace $val(x) $val(y)
 
-#definetopology
-$topoload_flatgrid$val(x)$val(y)
+# define topology
+$topo load_flatgrid $val(x) $val(y)
 
-#CreateogjectGod(GeneralOperationsDirector)
-#thatstoresthetotalnumberofmobilenodesandatableofshortest
-#numberofhopsrequiredtoreachfromonenodetoanother.++
-setgod_[create-god$val(nn)]
+# Create ogject God (General Operations Director)
+# that stores the total number of mobilenodes and a table of shortest
+# number of hops required to reach from one node to another. ++
+set god_ [create-god $val(nn)]
 
-#definehownodeshouldbecreated
+# define how node should be created
 #
 
-#globalnodesetting(configuring)
-$ns_node-config-adhocRouting$val(adhocRouting)\
--llType$val(ll)\
--macType$val(mac)\
--ifqType$val(ifq)\
--ifqLen$val(ifqlen)\
--antType$val(ant)\
--propType$val(prop)\
--phyType$val(netif)\
--channelType$val(chan)\
-		-topoInstance$topo\
-		-agentTraceON\
--routerTraceON\
--macTraceON
+#global node setting (configuring)
+$ns_ node-config -adhocRouting $val(adhocRouting) \
+                 -llType $val(ll) \
+                 -macType $val(mac) \
+                 -ifqType $val(ifq) \
+                 -ifqLen $val(ifqlen) \
+                 -antType $val(ant) \
+                 -propType $val(prop) \
+                 -phyType $val(netif) \
+                 -channelType $val(chan) \
+		 -topoInstance $topo \
+		 -agentTrace ON \
+                 -routerTrace ON \
+                 -macTrace ON 
 
 
-#Createthespecifiednumberofnodes[$val(nn)]and"attach"them
-#tothechannel.
-for{seti0}{$i<$val(nn)}{incri}{
-	setnode_($i)[$ns_node]	
-	$node_($i)random-motion0	;#disablerandommotion
+#  Create the specified number of nodes [$val(nn)] and "attach" them
+#  to the channel. 
+for {set i 0} {$i < $val(nn) } {incr i} {
+	set node_($i) [$ns_ node]	
+	$node_($i) random-motion 0	;# disable random motion
 }
 
-#Definenodemovementmodel
-puts"Loadingconnectionpattern..."
-source$val(cp)			;#Loadandruncodesspecifiedby$val(cp)
+# Define node movement model
+puts "Loading connection pattern..."
+source $val(cp)			;# Load and run codes specified by $val(cp)
 
-#Definetrafficmodel
-puts"Loadingscenariofile..."
-source$val(sc)			;#Loadandruncodesspecifiedby$val(sc)
+# Define traffic model
+puts "Loading scenario file..."
+source $val(sc)			;# Load and run codes specified by $val(sc)
 
-#Definenodeinitialsizeinnam
-for{seti0}{$i<$val(nn)}{incri}{
-$ns_initial_node_pos$node_($i)20
-#20definesthenodesizebutnodepositioninnam,
-#mustadjustitaccordingtoyourscenario.
-#Thefunctionmustbecalledaftermobilitymodelisdefined
+# Define node initial size in nam
+for {set i 0} {$i < $val(nn)} {incr i} {
+    $ns_ initial_node_pos $node_($i) 20
+# 20 defines the node size but node position in nam, 
+# must adjust it according to your scenario. 
+# The function must be called after mobility model is defined
 }
 
-#Tellnodeswhenthesimulationends
-for{seti0}{$i<$val(nn)}{incri}{
-$ns_at$val(stop).0"$node_($i)reset";
+# Tell nodes when the simulation ends
+for {set i 0} {$i < $val(nn) } {incr i} {
+    $ns_ at $val(stop).0 "$node_($i) reset";
 }
 
-$ns_at$val(stop).0002"puts\"NSEXITING...\";$ns_halt"
-puts$tracefd"M0.0nn$val(nn)x$val(x)y$val(y)rp$val(adhocRouting)"
-puts$tracefd"M0.0sc$val(sc)cp$val(cp)seed$val(seed)"
-puts$tracefd"M0.0prop$val(prop)ant$val(ant)"
+$ns_ at  $val(stop).0002 "puts \"NS EXITING...\" ; $ns_ halt"
+puts $tracefd "M 0.0 nn $val(nn) x $val(x) y $val(y) rp $val(adhocRouting)"
+puts $tracefd "M 0.0 sc $val(sc) cp $val(cp) seed $val(seed)"
+puts $tracefd "M 0.0 prop $val(prop) ant $val(ant)"
 
-puts"StartingSimulation..."
-$ns_run
+puts "Starting Simulation..."
+$ns_ run
 
