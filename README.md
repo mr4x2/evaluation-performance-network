@@ -497,16 +497,18 @@ gnuplot> plot "throughput1-2.tr" w lines
 Sử dụng perl để tính granularity
 
 ```perl
-# type: perl throughput.pl <trace file> <from node> <to node>
-$infile  = $ARGV[0];
-$srcnode = $ARGV[1];
-$tonode  = $ARGV[2];
+# type: perl granularity.pl <trace file> <from node> <to node> <granularity_sec>
+$infile      = $ARGV[0];
+$srcnode     = $ARGV[1];
+$tonode      = $ARGV[2];
+$granularity = $ARGV[3];
+$start_time  = 0;
+$end_time    = 0;
 
 
-# we compute how many bytes were transmitted during time interval specified
-$sum        = 0;
-$start_time = -1;
-$end_time   = 0;
+# we compute how many bytes were transmitted during time interval# specified by granularity parameter in seconds
+$sum   = 0;
+$clock = 0;
 open( DATA, "<$infile" ) || die "Can't open $infile $!";
 while (<DATA>) {
     @x = split(' ');
@@ -531,25 +533,30 @@ while (<DATA>) {
 
     # get the first part of splitter
     $to = "$parts_tonode[0]";
+
+
     # checking if the event corresponds to a reception
-    if (   $x[0] == "r"
-        && $x[3] == "AGT"
-        && $x[6] == "tcp"
-        && $src == $srcnode
-        && $to == $tonode )
-    {
-        if ( $start_time == -1 ) {
+    if ( $x[0] == 'r' && $src == $srcnode && $to == $tonode ) {
+        if ( $start_time <= 0 ) {
             $start_time = $x[1];
+            $clock      = $start_time;
+
+
+            # print STDOUT "Start_time = $start_time\n";
         }
+        if ( $x[1] - $clock < $granularity ) { $sum = $sum + $x[5] * 8 / 1024; }
         else {
-            $sum += $x[7];
-            if ( $x[1] != $start_time ) {
-                $throughput = $sum / ( $x[1] - $start_time );
-                $throughput = $throughput * 8 / 1024;
-                print STDOUT "$x[1] $throughput \n";
-            }
+            $end_time   = $x[1];    # $throughput=$sum/$granularity;
+            $throughput = $sum / ( $end_time - $clock );
+            print STDOUT "$x[1] $throughput\n";
+            $clock = $clock + $granularity;
+            $sum   = 0;
         }
     }
+}
+if ( $x[1] - $clock < $granularity ) {
+    $throughput = $sum / ( $x[1] - $clock );
+    print STDOUT "$end_time $throughput\n";
 }
 close DATA;
 exit(0);
@@ -557,7 +564,7 @@ exit(0);
 
 Sử dụng lệnh perl để lấy data
 ```cmd
-perl throughput.pl wireless1-out.tr 1 2 > throughput1-2.tr
+perl granularity.pl wireless1-out.tr 1 2 0.15 > gra_1-2.tr
 ```
 
 Vẽ đồ thị
@@ -566,10 +573,74 @@ Vẽ đồ thị
 gnuplot> set title "Throughput of TCP Connections Over Time"
 gnuplot> set xlabel "Time"
 gnuplot> set ylabel "Throughput (Kbps)"
-gnuplot> plot "throughput1-2.tr" w lines
+gnuplot> plot "gra_1-2.tr" w lines
 
 ```
 
-![alt text](./image/image13.png)
+![alt text](./image/image14.png)
 
+### Câu #4 (2 điểm)
 
+#### 4.1 Số gói tin được gửi từ nút nguồn (nút có thực thể gửi tcp hoặc udp)
+
+**Tính tại tầng AGT**
+
+Node 0 -> node 2
+
+```cmd
+cat wireless1-out.tr|grep "AGT"|grep -E 'tcp|cbr'|grep '\[0:.'|grep ' 2:.'|grep ^s|wc -l
+
+70
+```
+
+Node 1-> node 2
+
+```cmd
+cat wireless1-out.tr|grep "AGT"|grep -E 'tcp|cbr'|grep '\[1:.'|grep ' 2:.'|grep ^s|wc -l
+
+12626
+```
+
+**Tính tại tầng MAC**:
+- Node 0 -> node 2:
+```cmd
+cat wireless1-out.tr|grep "MAC"|grep -E 'tcp|cbr'|grep '\[0:.'|grep ' 2:.'|grep ^s|wc -l
+
+148
+```
+- Node 1 -> node 2:
+```cmd
+cat wireless1-out.tr|grep "MAC"|grep -E 'tcp|cbr'|grep '\[1:.'|grep ' 2:.'|grep ^s|wc -l
+
+17459
+```
+
+### 4.2 Số gói tin được nhận tại nút đích (nút có thực thể nhận tcp/udp, tức là sink/null)
+
+**Tính tại tầng AGT:**
+- Node 0 -> node 2:
+```cmd
+cat wireless1-out.tr|grep "AGT"|grep -E 'tcp|cbr'|grep '\[0:.'|grep ' 2:.'|grep ^r|wc -l
+
+65
+```
+- Node 1 -> node 2:
+```cmd
+cat wireless1-out.tr|grep "AGT"|grep -E 'tcp|cbr'|grep '\[1:.'|grep ' 2:.'|grep ^r|wc -l
+
+12566
+```
+
+**Tính tại tầng MAC:**
+- Node 0 -> node 2:
+```cmd
+cat wireless1-out.tr|grep "MAC"|grep -E 'tcp|cbr'|grep '\[0:.'|grep ' 2:.'|grep ^r|wc -l
+
+148
+```
+- Node 1 -> node 2:
+```cmd
+cat wireless1-out.tr|grep "MAC"|grep -E 'tcp|cbr'|grep '\[1:.'|grep ' 2:.'|grep ^r|wc -l
+
+17433
+```
